@@ -11,6 +11,11 @@ const asyncHandler = require('express-async-handler')
 
 exports.signup = async (req, res) => {
     const { email, password, phone, fullname } = req.body
+    console.log({email})
+    console.log({password})
+    console.log({phone})
+    console.log({fullname})
+    console.log(res)
     try {
         const olduser = await userModel.findOne({ email })
         if (olduser) return res.status(400).json({ message: "user already exist" })

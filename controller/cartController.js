@@ -12,8 +12,10 @@ exports.getACart = async (req, res) => {
 }
 exports.AddCart = async (req, res) => {
     try {
+       
 
         const { product, qty, size } = req.body
+     
         if (!product || !qty || !size) return res.status(400).json({ message: 'all fields require' })
         const found = await cartModel.findOne({ userid: req.user })
         const productDetails = await productModel.findById(product)
@@ -21,6 +23,7 @@ exports.AddCart = async (req, res) => {
         const price = productDetails.price * qty
         const discountPrice = productDetails.discountPrice * qty
         const products = { product, qty, size, price, discountPrice }
+     
         if (!found) {
             const newCart = new cartModel({ userid: req.user, products, totalPrice: price, totalDiscount: discountPrice })
             await newCart.save()

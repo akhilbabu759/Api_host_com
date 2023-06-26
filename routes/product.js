@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
-router.route('/')
+router.route('/')  
     .get(productController.getAllProducts)
     .post(upload.array('images', 5), productController.createProducts)
 router.route('/:id')

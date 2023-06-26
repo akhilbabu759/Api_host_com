@@ -11,17 +11,28 @@ exports.getAllOrders = async (req, res) => {
     }
 }
 exports.createOrder = async (req, res) => {
+    
+    
     try {
         const { addressId, paymentType, products } = req.body
+        console.log(addressId)
+    console.log(paymentType)
+    console.log(products,'11111111111111')
+    // cart.products.filter(product => products.find(e => e.id == product._id))
+
         if (!addressId || !paymentType || !products.length) return res.status(400).json({ message: 'all fields required' })
         const cart = await cartModel.findOne({ userid: req.user })
         if (!cart) return res.status(400).json({ message: 'no cart found' })
         const orderProducts = await cart.products.filter(product => products.find(e => e.id == product._id))
+        console.log(orderProducts)
+        console.log(cart)
+        
         if (!orderProducts.length) return res.status(400).json({ message: 'product not found in cart' })
+        console.log(orderProducts.length)
         const totalPrice = await orderProducts.reduce((acc, curr) => {
             return acc + curr.price
         }, 0)
-        const totalDiscount = await orderProducts.reduce((acc, curr) => {
+    const totalDiscount = await orderProducts.reduce((acc, curr) => {
             return acc + curr.discountPrice
         }, 0)
         const { fullName,

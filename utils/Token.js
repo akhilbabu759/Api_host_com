@@ -14,6 +14,6 @@ exports.createAccessToken = (id) => {
             id
         },
     }, process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '30m' }
+        { expiresIn: '7d' }
     ))
 }
